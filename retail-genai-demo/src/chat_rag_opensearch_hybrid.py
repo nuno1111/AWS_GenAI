@@ -110,7 +110,7 @@ def extract_pdf_name_and_page(documents: List[Document]) -> List[Dict]:
         result.append({'pdf_name': pdf_name, 'page': page})
     return result
 
-from streamlit_pdf_viewer import pdf_viewer
+# from streamlit_pdf_viewer import pdf_viewer
 
 def chat_rag_opensearch_hybrid_main() -> None:
     prompt = st.chat_input()

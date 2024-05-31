@@ -1,5 +1,5 @@
 import streamlit as st
-import src.video_attribute_lib_v3 as glib
+import src.video_attribute_lib_v4 as glib
 import tempfile
 import os
 
@@ -41,6 +41,9 @@ final_prompt = """<input_ocr_list/>
 <instruction>
 - <input_ocr_list> 는 홈쇼핑 동영상내 여러 frame으로부터 ocr text 목록이고, Hallucinations이 있을 수 있습니다.
 - <input_ocr_list> 으로부터 대표상품명/가격/행사카드할인율/가격행사 정보를 추출해주세요.
+- <original_ocr_text> 는 전체 Frame에서 OCR로 문자를 추출하였습니다.
+- <croped_ocr_text> 는 Frame에서 우측 바를 Crop한 이미지에 대한 OCR입니다. 
+- <croped_ocr_text> 에 가격정보가 정확합니다. <croped_ocr_text> 를 먼저 참조하고, <croped_ocr_text> 가격정보가 없다면 <original_ocr_text>를 부가적으로 참조해주세요.
 </instruction>
 
 <가격정보_유의사항>
@@ -218,6 +221,7 @@ final_prompt = """<input_ocr_list/>
 }
 </result>
 """
+
 def video_attribute_app_main():
     st.title("방송 속성 추출")
 
@@ -262,7 +266,7 @@ def video_attribute_app_main():
         go_button = st.button("Go", type="primary")
 
         # st.subheader("분석정보")
-        target_min = st.number_input("분석 분량을 선택해주세요(분)", min_value=1, max_value=60, step=1, value=7)
+        target_min = st.number_input("분석 분량을 선택해주세요(분)", min_value=1, max_value=60, step=1, value=10)
         cycle_sec = st.number_input("Frame 추출 주기를 선택해주세요(초)", min_value=4, max_value=60, step=1, value=10)
         
         # st.subheader("방송선택")

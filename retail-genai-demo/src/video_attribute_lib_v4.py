@@ -33,10 +33,15 @@ def get_input_ocr_list(video_file, target_min, cycle_sec):
         
         # 원본 이미지를 바이트 스트림으로 변환
         img = Image.fromarray(frame)
-        # original_byte_stream = io.BytesIO()
-        # img.save(original_byte_stream, format='JPEG')  # 이미지 형식을 지정합니다. (예: PNG, JPEG 등)
+        original_byte_stream = io.BytesIO()
+        img.save(original_byte_stream, format='JPEG')  # 이미지 형식을 지정합니다. (예: PNG, JPEG 등)
         # original_byte_stream.seek(0)
         # original_image_base64 = base64.b64encode(original_byte_stream.getvalue()).decode('utf-8')
+        
+        st.image(img)
+        original_ocr_text = upstage_api.get_ocr(original_byte_stream.getvalue())
+        st.write("Frame " + str(i)," original_ocr =>",original_ocr_text)
+        time.sleep(0.5)
              
         ## 우측 가격정보 crop 
         cropped_img = img.crop((990, 150, 1230, 640))
@@ -55,7 +60,8 @@ def get_input_ocr_list(video_file, target_min, cycle_sec):
         ## OCR만 적용
         input_ocr_list += "<frame>\n"
         input_ocr_list += "  <frame_id>{}</frame_id>\n".format(i)
-        input_ocr_list += "  <ocr>{}</ocr>\n".format(croped_ocr_text)
+        input_ocr_list += "  <original_ocr_text>{}</original_ocr_text>\n".format(original_ocr_text)
+        input_ocr_list += "  <croped_ocr_text>{}</croped_ocr_text>\n".format(croped_ocr_text)
         input_ocr_list += "</frame>\n"
     input_ocr_list += "</input_ocr_list>"
     

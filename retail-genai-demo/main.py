@@ -8,22 +8,25 @@ import src.risk_review_app as risk_review_app
 import src.risk_review_scoring_app as risk_review_scoring_app
 import src.image_search_app as image_search_app
 import src.chat_rag_opensearch_hybrid as chat_rag_opensearch_hybrid
-import src.video_attribute_app as video_attribute_app
-import src.video_attribute_app_v2 as video_attribute_app_v2
+# import src.video_attribute_app as video_attribute_app
+# import src.video_attribute_app_v2 as video_attribute_app_v2
 import src.video_attribute_app_v3 as video_attribute_app_v3
+import src.video_attribute_app_v4 as video_attribute_app_v4
 
 st.set_page_config(layout="wide")
 st.sidebar.title("리테일 GenAI 데모")
 
 # 여러 탭을 만듭니다.
-selected_tab = st.sidebar.radio("데모 선택", ["방송 속성 추출 v3","방송 속성 추출 v2","방송 속성 추출 v1","방송 매뉴얼 챗봇","위험 리뷰 스코어링","위험 리뷰 분석","패션 이미지 검색","챗봇 RAG 데모","홈쇼핑 숏츠 데모","상품 리뷰 요약", "상품 이미지 분석", "상품 이미지 배경"])
+selected_tab = st.sidebar.radio("데모 선택", ["방송 속성 추출 v4","방송 속성 추출 v3","방송 매뉴얼 챗봇","위험 리뷰 스코어링","위험 리뷰 분석","패션 이미지 검색","챗봇 RAG 데모","홈쇼핑 숏츠 데모","상품 리뷰 요약", "상품 이미지 분석", "상품 이미지 배경"])
 
-if selected_tab == "방송 속성 추출 v3":
+if selected_tab == "방송 속성 추출 v4":
+    video_attribute_app_v4.video_attribute_app_main()
+elif selected_tab == "방송 속성 추출 v3":
     video_attribute_app_v3.video_attribute_app_main()
-elif selected_tab == "방송 속성 추출 v2":
-    video_attribute_app_v2.video_attribute_app_main()
-elif selected_tab == "방송 속성 추출 v1":
-    video_attribute_app.video_attribute_app_main()
+# elif selected_tab == "방송 속성 추출 v2":
+#     video_attribute_app_v2.video_attribute_app_main()
+# elif selected_tab == "방송 속성 추출 v1":
+    # video_attribute_app.video_attribute_app_main()
 elif selected_tab == "방송 매뉴얼 챗봇":
     chat_rag_opensearch_hybrid.chat_rag_opensearch_hybrid_main()
 elif selected_tab == "위험 리뷰 스코어링":

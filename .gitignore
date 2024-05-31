@@ -3,3 +3,6 @@
 *.pkl
 temp.py
 pem/
+.venv/
+__pycache__/
+.DS_Store

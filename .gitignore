@@ -6,3 +6,4 @@ pem/
 .venv/
 __pycache__/
 .DS_Store
+upstage_api.key

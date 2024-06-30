@@ -3,7 +3,6 @@ import json
 import base64
 from io import BytesIO
 
-
 #파일 바이트에서 base64로 인코딩된 문자열 가져오기
 def get_base64_from_bytes(bytesio):
     img_str = base64.b64encode(bytesio.getvalue()).decode("utf-8")
@@ -56,3 +55,56 @@ def get_response_from_model(prompt_content, bytesio, model_id, system_prompt=Non
     
     return output
 
+
+bedrock = boto3.client("bedrock-runtime")
+bedrock_model_id = "anthropic.claude-3-sonnet-20240229-v1:0"
+embedding_model_id = "amazon.titan-embed-text-v2:0"
+
+def get_llm_output(prompt):
+    
+    body = json.dumps({
+                "anthropic_version": "bedrock-2023-05-31",
+                "max_tokens": 1024,
+                "temperature" : 0.1,
+                "top_p": 0.5,
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": prompt},
+                        ],
+                    }
+                ],
+            }) 
+
+    response = bedrock.invoke_model(
+        body=body, 
+        modelId=bedrock_model_id,
+        accept='application/json',
+        contentType='application/json')
+
+    response_body = json.loads(response.get("body").read())
+    llm_output = response_body.get("content")[0].get("text")
+    return llm_output
+
+def get_embedding_output(query, embedding_dimension = 1024):
+    
+    try:
+        body = {
+            "inputText": query,
+            "dimensions": embedding_dimension,
+            "normalize": True
+        }
+
+        response = bedrock.invoke_model(
+            body=json.dumps(body), 
+            modelId=embedding_model_id,
+            accept='application/json',
+            contentType='application/json')
+
+        response_body = json.loads(response.get("body").read())
+        embedding = response_body.get("embedding")
+        return embedding
+    except Exception as e:
+        print(f"Error: {e}")
+        return False

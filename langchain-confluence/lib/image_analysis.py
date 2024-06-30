@@ -11,7 +11,7 @@ modelId = "anthropic.claude-3-sonnet-20240229-v1:0"
 def get_image_analysis(image_bytesIO):
     
     ocr_text = upstage_api.get_ocr(image_bytesIO.getvalue())
-    
+    print(ocr_text)
     prompt_content = """
 - 해당 이미지는 Confluence에 Wiki에 첨부된 이미지입니다.
 - 해당 이미지의 OCR 정보를 아래 <ocr>태그 안에 추가하였습니다.

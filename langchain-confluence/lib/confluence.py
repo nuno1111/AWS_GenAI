@@ -1,9 +1,21 @@
 from atlassian import Confluence
 
+import os
+from dotenv import load_dotenv
+# .env 파일 로드
+load_dotenv()
+
+
+url = os.getenv("CONFLUENCE_URL")
+username = os.getenv("CONFLUENCE_USERNAME")
+password = os.getenv("CONFLUENCE_API_KEY")
+
+
+
 confluence = Confluence(
-    url="https://lge-web-project.atlassian.net/wiki/",
-    username="nuno1026@gmail.com",
-    password="ATATT3xFfGF0KS5JpjHLBVnbP8kL9r_-8hmIzoxlxCC21Q0-navImrH6Z8bagRVLNtAbExImW_kTN6whpiEZt_8lZQ7puuiPEZQyZqzVQA-flq8pCf1S7uj7WlHlX924a_oLuThJjlzUP4X7nrGyLX91SgqSpk60QK8BxWmKYffryUSZLD5hKIA=08CA530A",
+    url=url,
+    username=username,
+    password=password,
     cloud=True
 )
 
